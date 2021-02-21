@@ -6,12 +6,18 @@ import javax.persistence.*;
  * @author rudolf.shakhgaldyan on 2/20/2021.
  */
 @Entity
-@Table(name = "users")
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})}, name = "users")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(name = "username", nullable = false)
+	private String username;
+
+	@Column(name = "hashedPassword", nullable = false)
+	private String password;
 
 	@Column(name = "first_name", nullable = false)
 	private String firstName;
@@ -25,15 +31,21 @@ public class User {
 	@Column(name = "is_admin", nullable = false)
 	private Boolean isAdmin;
 
+	@Column(name = "is_blocked", nullable = false)
+	private Boolean isBlocked;
+
 	public User() {
 	}
 
-	public User(Long id, String firstName, String lastName, String email, Boolean isAdmin) {
+	public User(Long id, String username, String password, String firstName, String lastName, String email, Boolean isAdmin, Boolean isBlocked) {
 		this.id = id;
+		this.username = username;
+		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.isAdmin = isAdmin;
+		this.isBlocked = isBlocked;
 	}
 
 	public Long getId() {
@@ -42,6 +54,22 @@ public class User {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getFirstName() {
@@ -66,5 +94,21 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Boolean getAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		isAdmin = admin;
+	}
+
+	public Boolean getBlocked() {
+		return isBlocked;
+	}
+
+	public void setBlocked(Boolean blocked) {
+		isBlocked = blocked;
 	}
 }

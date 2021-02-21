@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author rudolf.shakhgaldyan on 2/20/2021.
@@ -38,5 +39,19 @@ public class UserDataDto implements Serializable {
 		this.email = email;
 		this.isBlocked = isBlocked;
 		this.isAdmin = isAdmin;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof UserDataDto)) return false;
+		UserDataDto that = (UserDataDto) o;
+		return Objects.equals(id, that.id) &&
+				Objects.equals(username, that.username);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, username);
 	}
 }

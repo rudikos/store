@@ -1,9 +1,9 @@
 package com.example.store.domain;
 
-import com.example.store.converter.MapConverter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.Map;
 
 /**
  * @author rudolf.shakhgaldyan on 2/20/2021.
@@ -13,30 +13,32 @@ import java.util.Map;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="category_id", nullable=false)
+	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;
 
-	@Column(name = "name", nullable=false)
+	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "description", nullable=false)
+	@Column(name = "description", nullable = false)
 	private String description;
 
-	@Column(name = "price", nullable=false)
+	@Column(name = "price", nullable = false)
 	private Double price;
-
-	@Transient
-	@Convert(converter = MapConverter.class)
-	private Map<String, Object> fields;
 
 	public Product() {
 	}
 
-	public Product(Category category, String name, String description, Double price, Map<String, Object> fields) {
+	public Product(Long id, Category category, String name, String description, Double price) {
+		this.id = id;
+		this.category = category;
+		this.name = name;
+		this.description = description;
+		this.price = price;
 	}
 
 	public Long getId() {
@@ -77,13 +79,5 @@ public class Product {
 
 	public void setPrice(Double price) {
 		this.price = price;
-	}
-
-	public Map<String, Object> getFields() {
-		return fields;
-	}
-
-	public void setFields(Map<String, Object> fields) {
-		this.fields = fields;
 	}
 }
