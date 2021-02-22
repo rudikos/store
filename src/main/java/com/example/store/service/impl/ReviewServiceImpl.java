@@ -12,6 +12,8 @@ import com.example.store.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * @author rudolf.shakhgaldyan on 2/21/2021.
@@ -35,8 +37,17 @@ public class ReviewServiceImpl implements ReviewService {
 		User user = userService.getUser(userId);
 		Review review = new Review(reviewDto.rate, reviewDto.comment, user, product);
 		Review savedReview = reviewRepository.save(review);
-		long modifiedDate = savedReview.getLastModifiedDate().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-		return new ReviewDto(savedReview.getRate(), savedReview.getComment(), savedReview.getLastModifiedBy(), modifiedDate);
+		return toDto(savedReview);
 	}
 
+	@Override
+	public Collection<ReviewDto> findByProductId(Long productId) {
+		Collection<Review> reviews = reviewRepository.findByProductId(productId);
+		return reviews.stream().map(r -> toDto(r)).collect(Collectors.toList());
+	}
+
+	private ReviewDto toDto(Review review) {
+		long modifiedDate = review.getLastModifiedDate().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+		return new ReviewDto(review.getComment(), review.getRate(), review.getLastModifiedBy(), modifiedDate);
+	}
 }

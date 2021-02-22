@@ -10,18 +10,24 @@ import java.io.Serializable;
 public class ReviewDto implements Serializable {
 	private static final long serialVersionUID = 5705062173672993223L;
 
-	public final int rate;
-	public final String comment;
+	public int rate;
+	public String comment;
 
-	public final Long lastModifiedBy;
-	public final long lastModifiedDate;
+	public Long lastModifiedBy;
+	public long lastModifiedDate;
 
-	@JsonCreator
-
-	public ReviewDto(int rate, String comment, Long lastModifiedBy, long lastModifiedDate) {
+	public ReviewDto(String comment, int rate, Long lastModifiedBy, long lastModifiedDate) {
 		this.rate = rate;
 		this.comment = comment;
 		this.lastModifiedBy = lastModifiedBy;
 		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public ReviewDto(int rate, String comment) {
+		this.rate = rate;
+		this.comment = comment;
+	}
+
+	public ReviewDto() {
 	}
 }

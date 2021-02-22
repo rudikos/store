@@ -339,6 +339,37 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get reviews by product id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2YW5kYW0iLCJpZCI6LTEsImlzQWRtaW4iOnRydWUsImV4cCI6MTYxMzk3NjM3M30.ZxRcFmm9shvqveTE0uVrH-KobFilWROTxe6HLT00rsORd0UqNKMUiR7zOHIEQTP6ajkV1FvnD9euoX7fZ_6TQA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products/-2/reviews",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"-2",
+								"reviews"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

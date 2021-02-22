@@ -4,10 +4,9 @@ import com.example.store.dto.ReviewDto;
 import com.example.store.exception.ResourceNotFoundException;
 import com.example.store.service.CurrentUserProvider;
 import com.example.store.service.ReviewService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 /**
  * @author rudolf.shakhgaldyan on 2/21/2021.
@@ -29,5 +28,10 @@ public class ReviewController extends BaseController {
 		}
 		Long currentUserId = currentUserProvider.getCurrentUserId();
 		return reviewService.createReview(productId, reviewDto, currentUserId);
+	}
+
+	@GetMapping(value = "/products/{productId}/reviews")
+	public Collection<ReviewDto> getReviews(@PathVariable("productId") Long productId) {
+		return reviewService.findByProductId(productId);
 	}
 }
